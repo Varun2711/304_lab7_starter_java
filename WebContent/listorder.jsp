@@ -5,7 +5,7 @@
 <html>
 <head>
 	<style>
-		table, tr, td {
+		table, tr, th, td {
 			border: 1px solid black;
 		}
 		
@@ -13,8 +13,13 @@
 			text-align: center;
 		}
 
+		th {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+
 	</style>
-<title>YOUR NAME Grocery Order List</title>
+<title>EZ Grocery Order List</title>
 </head>
 <body>
 
@@ -59,6 +64,35 @@ catch (java.lang.ClassNotFoundException e)
 
 con = DriverManager.getConnection(url, uid, pw);
 
+
+// Get customer ID
+String customerId = request.getParameter("customerId");
+
+// Validate if customer ID is a number
+if (customerId != null && !customerId.matches("\\d+")) {
+    out.println("Invalid customer ID!");
+    return; // End execution or display error message
+}
+
+// Check if this customer ID exists in the database
+// You should query the database and validate if the ID is valid
+
+// Assuming the shopping cart is stored in a session variable
+if (session.getAttribute("cart") == null || ((Map<String, Integer>) session.getAttribute("cart")).isEmpty()) {
+    out.println("Your shopping cart is empty!");
+    return; // End execution or display error message
+}
+
+// Calculate total amount
+double totalAmount = ...; // Calculate total amount based on products in the cart
+
+// Update total amount in OrderSummary table
+// Should use PreparedStatement to perform the update
+
+// Clear the cart after a successful order placement
+session.removeAttribute("cart");
+
+
 // Write query to retrieve all order summary records
 
 // For each order in the ResultSet
@@ -76,11 +110,13 @@ con = DriverManager.getConnection(url, uid, pw);
 	String sql2 = "SELECT productId, quantity, price FROM orderproduct WHERE orderid = ?";
 	PreparedStatement pstmt = con.prepareStatement(sql2);
 
-	NumberFormat currFormat = NumberFormat.getCurrencyInstance();
+	NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.CA);
+
 
 	String output = "<table><thead><td><b>Order Id</b></td><td><b>Order Date</b></td><td><b>Customer Id</b></td><td><b>Customer Name</b></td><td><b>Total Amount</b></td></thead>";
 
-	while (rs.next()) {
+
+		while (rs.next()) {
 		String oid = rs.getString(1);
 		String odate = rs.getString(2);
 		String cid = rs.getString(3);
@@ -126,4 +162,3 @@ catch (Exception e)
 
 </body>
 </html>
-
