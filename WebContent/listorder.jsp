@@ -4,6 +4,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style>
+		table, tr, td {
+			border: 1px solid black;
+		}
+		
+		td {
+			text-align: center;
+		}
+
+	</style>
 <title>YOUR NAME Grocery Order List</title>
 </head>
 <body>

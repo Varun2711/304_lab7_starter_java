@@ -33,6 +33,39 @@ catch (java.lang.ClassNotFoundException e)
 
 // Make the connection
 
+// User id, password, and server information
+String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";
+String uid = "sa";
+String pw = "304#sa#pw";
+	
+// Do not modify this url
+String urlForLoadData = "jdbc:sqlserver://cosc304_sqlserver:1433;TrustServerCertificate=True";
+	
+// Connection
+Connection con = null;
+
+try
+{	// Load driver class
+	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+}
+catch (java.lang.ClassNotFoundException e)
+{
+	throw new SQLException("ClassNotFoundException: " +e);
+}
+
+con = DriverManager.getConnection(url, uid, pw);
+
+// query
+
+String sql = "SELECT productId, productName, productPrice FROM product WHERE productName LIKE ? ";
+
+PreparedStatement pstmt = con.prepareStatement(sql);
+pstmt.setString(1, "%" + name + "%");
+ResultSet rs = pstmt.executeQuery();
+
+
+
+
 // Print out the ResultSet
 
 // For each product create a link of the form
@@ -43,7 +76,28 @@ catch (java.lang.ClassNotFoundException e)
 // NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 // out.println(currFormat.format(5.0));	// Prints $5.00
 
+NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 
+String output = "<table><thead><td></td><td>Product Name</td><td>Price</td></thead>";
+while(rs.next()) {
+	String id = rs.getString(1);
+	String pname = rs.getString(2);
+	String price = currFormat.format(rs.getDouble(3));
+	
+	String href = "addcart.jsp?id=" + id + "&name=" + pname + "&price=" + price;
+	String item = "<tr><td><a href=\"" + URLEncoder.encode(href) +
+		 "\">add to cart</a></td>"+
+		 "<td>" + pname + "</td><td>" + price + "</td></tr>";
+	output += item;
+}
+output += "</table>";
+
+if (name.equals("")){
+	output = "<h2>All products</h2>" + output;
+} else {
+	output = "<h2>Products containing '" + name + "'</h2>" + output;
+}
+out.println(output);
 %>
 
 </body>
