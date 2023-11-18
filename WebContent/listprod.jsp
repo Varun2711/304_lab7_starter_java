@@ -44,7 +44,7 @@ try {
         String pname = rs.getString(2);
         String price = currFormat.format(rs.getDouble(3));
 
-        String href = "addcart.jsp?id=" + URLEncoder.encode(id, "UTF-8") + "&name=" + URLEncoder.encode(pname, "UTF-8") + "&price=" + URLEncoder.encode(price, "UTF-8");
+        String href = "addcart.jsp?id=" + URLEncoder.encode(id, "UTF-8") + "&name=" + URLEncoder.encode(pname, "UTF-8") + "&price=" + URLEncoder.encode(price.substring(1), "UTF-8");
         String item = "<tr><td><a href=\"" + href + "\">add to cart</a></td><td>" + pname + "</td><td>" + price + "</td></tr>";
         output += item;
     }
