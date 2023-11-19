@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*,java.util.Iterator,java.util.Map,java.util.HashMap" %>
+<%@ page import="java.sql.*,java.util.Iterator,java.util.Map,java.util.HashMap,java.util.ArrayList" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
@@ -33,9 +33,9 @@ if (custId == null || !custId.matches("\\d+")) {
             con = DriverManager.getConnection(url, uid, pw);
 
             // Insert order information into ordersummary table
-            pstmt = con.prepareStatement("INSERT INTO ordersummary (customerId, totalAmount) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+            pstmt = con.prepareStatement("INSERT INTO ordersummary (customerId, orderDate, totalAmount) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, Integer.parseInt(custId));
-
+            pstmt.setTimestamp(2, new java.sql.Timestamp(System.currentTimeMillis()));
             // Calculate total amount
             double totalAmount = 0.0;
             Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
@@ -46,7 +46,7 @@ if (custId == null || !custId.matches("\\d+")) {
                 int quantity = (Integer) product.get(3);
                 totalAmount += price * quantity;
             }
-            pstmt.setDouble(2, totalAmount);
+            pstmt.setDouble(3, totalAmount);
 
             pstmt.executeUpdate();
             ResultSet keys = pstmt.getGeneratedKeys();
@@ -72,7 +72,7 @@ if (custId == null || !custId.matches("\\d+")) {
             // Clear shopping cart after successful order placement
             session.removeAttribute("productList");
 
-            out.println("Order placed successfully!");
+            out.println("<h1>Order placed successfully!</h1>");
         } catch (Exception e) {
             out.println("An error occurred: " + e.getMessage());
         } finally {
