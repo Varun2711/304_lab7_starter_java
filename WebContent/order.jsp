@@ -4,6 +4,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+		table, tr, thead, td {
+			border: 1px solid black;
+		}
+		
+		td {
+			text-align: center;
+		}
+
+		th {
+         background-color: #f2f2f2;
+            text-align: center;
+        }
+
+        thead td {
+            font-weight: bold;
+        }
+
+        #total {
+            text-align: right;
+            font-weight: bold;
+        }
+
+	</style>
     <title>YOUR NAME Grocery Order Processing</title>
 </head>
 <body>
@@ -72,7 +96,37 @@ if (custId == null || !custId.matches("\\d+")) {
             // Clear shopping cart after successful order placement
             session.removeAttribute("productList");
 
+            String sql = "SELECT op.productId, productName, quantity, op.price, (quantity * op.price) as subtotal FROM orderproduct op JOIN product p ON op.productId = p.productId WHERE op.orderId = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, orderId);
+            ResultSet rs = pstmt.executeQuery();
             out.println("<h1>Order placed successfully!</h1>");
+            out.println("<h2>Your order summary</h2>");
+            
+            NumberFormat currFormat = NumberFormat.getCurrencyInstance();
+            String table = "<table><thead><td>Product ID</td><td>Product Name</td><td>Quantity</td><td>Price</td><td>Subtotal</td></thead>";
+            while (rs.next()) {
+                String pid = rs.getString(1);
+                String pname = rs.getString(2);
+                String qty = rs.getString(3);
+                String price = currFormat.format(rs.getDouble(4));
+                String subtotal = currFormat.format(rs.getDouble(5));
+                String item = "<tr>";
+                item += "<td>" + pid + "</td><td>" + pname + "</td><td>" + qty + "</td><td>" + price + "</td><td>"  + subtotal + "</td>";
+                item += "</tr>";
+                table += item;
+            }
+            table += "<tr><td id='total' colspan=\"4\">Total: </td><td>" + currFormat.format(totalAmount)+ "</td></tr></table>";
+
+            out.println(table);
+            
+            pstmt = con.prepareStatement("SELECT c.customerId, CONCAT(firstName, ' ', lastName) FROM customer c JOIN ordersummary os ON c.customerId = os.customerId WHERE orderId = ?");
+            pstmt.setInt(1, orderId);
+            rs = pstmt.executeQuery();
+            rs.next();
+            out.println("<h2>Your order reference number is: " + orderId + "</h2>");
+            out.println("<h2>Shipping to customer: " + rs.getString(1) + ", Name: " + rs.getString(2) + "</h2>");
+
         } catch (Exception e) {
             out.println("An error occurred: " + e.getMessage());
         } finally {
