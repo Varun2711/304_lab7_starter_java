@@ -2,6 +2,20 @@
 <html>
 <head>
 <title>Administrator Page</title>
+<style>
+    table, tr, th, td {
+	    border: 1px solid black;
+	}	
+	
+    td {
+		text-align: center;
+	}
+
+    th {
+        background-color: #f2f2f2;
+        text-align: center;
+    }
+</style>
 </head>
 <body>
 
@@ -12,48 +26,23 @@
 <%@ include file="jdbc.jsp" %>
 
 <%
-
+out.println("<h1>Admin</h1><h2>Administrator sales report by day</h2>");
 // TODO: Write SQL query that prints out total order amount by day
-String sql = "";
-
-if (!isLoggedIn()) {
-    response.sendRedirect("login.jsp");
-    return;
-}
-
-//Write SQL query that prints out total order amount by day
-
-Connection con = null;
-PreparedStatement pstmt = null;
-ResultSet rs = null;
-
+String sql = "SELECT CONCAT(Year(orderDate), '-', Month(orderDate), '-', Day(orderDate)), SUM(totalAmount) AS total FROM ordersummary GROUP BY YEAR(orderDate), MONTH(orderDate), DAY(orderDate)";
 try {
     getConnection();
-
-    String sql = "SELECT orderDate, SUM(totalAmount) as total FROM orders GROUP BY orderDate";
-    pstmt = con.prepareStatement(sql);
-    rs = pstmt.executeQuery();
+    PreparedStatement pstmt = con.prepareStatement(sql);
+    ResultSet rs = pstmt.executeQuery();
 
     out.println("<table><thead><td>Order Date</td><td>Total Order Amount</td></thead>");
-
-    while (rs.next()) {
-        String date = rs.getString(1);
-        String amount = rs.getString(2);
-
-        out.println("<tr><td>" + date + "</td><td>" + amount + "</td></tr>");
+    while(rs.next()) {
+        out.println("<tr><td>"+ rs.getString(1) +"</td><td>$"+ rs.getString(2) +"</td></tr>");
     }
-
     out.println("</table>");
-} catch (SQLException e) {
+} catch(Exception e) {
     e.printStackTrace();
 } finally {
-    try {
-        if (rs != null) rs.close();
-        if (pstmt != null) pstmt.close();
-        if (con != null) con.close();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
+    closeConnection();
 }
 %>
 

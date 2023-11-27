@@ -2,6 +2,24 @@
 <html>
 <head>
     <title>Customer Page</title>
+    <style>
+        table, tr, th, td {
+			border: 1px solid black;
+		}
+		
+		td {
+			text-align: center;
+		}
+
+		th {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+
+        .lbl {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
@@ -15,33 +33,31 @@
     if (userName == null) {
         out.println("<p>Error: Please log in to access this page.</p>");
     } else {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        
 
         try {
             getConnection();
 
             // SQL query to retrieve customer information
-            String sql = "SELECT * FROM Customer WHERE username = ?";
-            pstmt = con.prepareStatement(sql);
+            String sql = "SELECT * FROM Customer WHERE userid = ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, userName);
-            rs = pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery();
 
             out.println("<h2>Customer Profile</h2><table>");
 
             while (rs.next()) {
-                out.println("<tr><td>id</td><td>" + rs.getString("id") + "</td></tr>");
-                out.println("<tr><td>First Name</td><td>" + rs.getString("firstName") + "</td></tr>");
-                out.println("<tr><td>Last Name</td><td>" + rs.getString("lastName") + "</td></tr>");
-                out.println("<tr><td>Email</td><td>" + rs.getString("email") + "</td></tr>");
-                out.println("<tr><td>Phone</td><td>" + rs.getString("phone") + "</td></tr>");
-                out.println("<tr><td>Address</td><td>" + rs.getString("address") + "</td></tr>");
-                out.println("<tr><td>City</td><td>" + rs.getString("city") + "</td></tr>");
-                out.println("<tr><td>State</td><td>" + rs.getString("state") + "</td></tr>");
-                out.println("<tr><td>Postal Code</td><td>" + rs.getString("postalCode") + "</td></tr>");
-                out.println("<tr><td>Country</td><td>" + rs.getString("country") + "</td></tr>");
-                out.println("<tr><td>User Id</td><td>" + rs.getString("username") + "</td></tr>");
+                out.println("<tr><td class='lbl'>Id</td><td>" + rs.getString("customerId") + "</td></tr>");
+                out.println("<tr><td class='lbl'>First Name</td><td>" + rs.getString("firstName") + "</td></tr>");
+                out.println("<tr><td class='lbl'>Last Name</td><td>" + rs.getString("lastName") + "</td></tr>");
+                out.println("<tr><td class='lbl'>Email</td><td>" + rs.getString("email") + "</td></tr>");
+                out.println("<tr><td class='lbl'>Phone</td><td>" + rs.getString("phonenum") + "</td></tr>");
+                out.println("<tr><td class='lbl'>Address</td><td>" + rs.getString("address") + "</td></tr>");
+                out.println("<tr><td class='lbl'>City</td><td>" + rs.getString("city") + "</td></tr>");
+                out.println("<tr><td class='lbl'>State</td><td>" + rs.getString("state") + "</td></tr>");
+                out.println("<tr><td class='lbl'>Postal Code</td><td>" + rs.getString("postalCode") + "</td></tr>");
+                out.println("<tr><td class='lbl'>Country</td><td>" + rs.getString("country") + "</td></tr>");
+                out.println("<tr><td class='lbl'>User Id</td><td>" + rs.getString("userid") + "</td></tr>");
             }
 
             out.println("</table>");
@@ -49,13 +65,7 @@
             e.printStackTrace();
         } finally {
             // Close resources
-            try {
-                if (rs != null) rs.close();
-                if (pstmt != null) pstmt.close();
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeConnection();
         }
     }
 %>

@@ -1,4 +1,4 @@
-<%@ page import="java.util.HashMap, java.sql.*" %>
+<%@ page import="java.util.HashMap, java.sql.*, java.net.URLEncoder" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <%@ include file="jdbc.jsp" %>
@@ -13,26 +13,30 @@
 <%@ include file="header.jsp" %>
 
 <%
+    NumberFormat currFormat = NumberFormat.getCurrencyInstance();
+
     // Get product name to search for
     String productId = request.getParameter("id");
 
-    Connection con = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
+    //Connection con = null;
+    //PreparedStatement pstmt = null;
+    //ResultSet rs = null;
 
     try {
         getConnection();
 
         String sql = "SELECT * FROM Product WHERE productId = ?";
-        pstmt = con.prepareStatement(sql);
+        PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setString(1, productId);
-        rs = pstmt.executeQuery();
+        ResultSet rs = pstmt.executeQuery();
 
         if (rs.next()) {
             // Display product information
-            out.println("<h2>" + rs.getString("productName") + "</h2>");
-            out.println("<p>Description: " + rs.getString("description") + "</p>");
-            out.println("<p>Price: " + rs.getString("price") + "</p>");
+            String pname = rs.getString("productName");
+            String desc = rs.getString("productDesc");
+            String price = currFormat.format(rs.getDouble("productPrice"));
+
+            out.println("<h2>" + pname + "</h2>");
 
             // Display image using productImageURL field if available
             String productImageURL = rs.getString("productImageURL");
@@ -41,10 +45,15 @@
             }
 
             // Display image from the binary field productImage by providing an img tag and modifying the displayImage.jsp/php file.
-            out.println("<img src='displayImage.jsp?id=" + productId + "' alt='Product Image'>");
+            out.println("<img src='displayImage.jsp?id=" + productId + "' alt='Product Image'><br>");
+
+            // display price and description
+            out.println("<p>Description: " + desc + "</p>");
+            out.println("<p>Price: " + price + "</p>");
 
             // Add links to Add to Cart and Continue Shopping
-            out.println("<a href='addToCart.jsp?id=" + productId + "'>Add to Cart</a>");
+            String href = "addcart.jsp?id=" + URLEncoder.encode(productId, "UTF-8") + "&name=" + URLEncoder.encode(pname, "UTF-8") + "&price=" + URLEncoder.encode(price.substring(1), "UTF-8");
+            out.println("<a href=\"" + href + "\">add to cart</a><br>");
             out.println("<a href='listprod.jsp'>Continue Shopping</a>");
         } else {
             out.println("<p>Product not found!</p>");
@@ -53,13 +62,15 @@
         e.printStackTrace();
     } finally {
         // Close resources
-        try {
-            if (rs != null) rs.close();
-            if (pstmt != null) pstmt.close();
-            if (con != null) con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        //try {
+        //    if (rs != null) rs.close();
+        //    if (pstmt != null) pstmt.close();
+        //    if (con != null) con.close();
+        //} catch (SQLException e) {
+        //    e.printStackTrace();
+        //}
+
+        closeConnection();
     }
 %>
 
