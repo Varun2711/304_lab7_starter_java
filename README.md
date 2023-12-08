@@ -1,33 +1,24 @@
 # 304_lab7_starter_java
 
-lines 68 onwards that were removed from listorder
+#### Now we need to setup the inserts in the ddl file correctly, so when the website loads up, the correct products are listed
+#### was struggling a bit trying to make my own jsp page, but I think I got the hang of it, I will finish up the admin page tmrw and start working on the reviews, and maybe even get to the shopping cart.
 
-// Get customer ID
-String customerId = request.getParameter("customerId");
+# source used today in setting up the add product: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
 
-// Validate if customer ID is a number
-if (customerId != null && !customerId.matches("\\d+")) {
-    out.println("Invalid customer ID!");
-    return; // End execution or display error message
-}
+##### Admin page
+- need to work on update/delete product
+- need to figure out how to add images
+- give admin ability to ship orders
+- update warehouses and customers
 
-// Check if this customer ID exists in the database
-// You should query the database and validate if the ID is valid
+##### Reviews
+- create a review page
+- customer can only create a single review on an item that they have purchased
+- show the reviews on the product detail page
 
-// Assuming the shopping cart is stored in a session variable
-//if (session.getAttribute("cart") == null || ((Map<String, Integer>) session.getAttribute("cart")).isEmpty()) {
-//    out.println("Your shopping cart is empty!");
-//    return; // End execution or display error message
-//}
-
-// Calculate total amount
-//double totalAmount = ...; // Calculate total amount based on products in the cart
-
-// Update total amount in OrderSummary table
-// Should use PreparedStatement to perform the update
-
-// Clear the cart after a successful order placement
-session.removeAttribute("cart");
-
-### These I believe are supposed to be in order.jsp, since all that listOrder.jsp does, is take entries is ordersummary table and print them out.
+##### shopping cart
+- update item quantity
+- remove item from shopping cart
+- improve UI
+- add persistence
 
