@@ -11,13 +11,18 @@
 <h1>Search for the products you want to buy:</h1>
 
 <form method="get" action="listprod.jsp">
+    <label for="productName">Enter a product name: </label>
     <input type="text" name="productName" size="50">
+    <br>
+    <label for="category">Enter a category: </label>
+    <input type="text" name="category" size="50">
+    <br>
     <input type="submit" value="Submit"><input type="reset" value="Reset"> (Leave blank for all products)
 </form>
 
 <%
 String name = request.getParameter("productName");
-
+String category = request.getParameter("category");
 try {
     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 } catch (java.lang.ClassNotFoundException e) {
@@ -31,9 +36,22 @@ Connection con = null;
 
 try {
     con = DriverManager.getConnection(url, uid, pw);
-    String sql = "SELECT productId, productName, productPrice FROM product WHERE productName LIKE ? ";
+    String sql = "";
+    if (!name.isEmpty()) {
+        sql = "SELECT productId, productName, productPrice FROM product WHERE productName LIKE ? ";
+    } else if (!category.isEmpty()) {
+        sql = "SELECT productId, productName, productPrice FROM product WHERE categoryId = ?";
+    } else {
+        sql = "SELECT productId, productName, productPrice FROM product";
+    }
     PreparedStatement pstmt = con.prepareStatement(sql);
-    pstmt.setString(1, "%" + name + "%");
+
+    if (!name.isEmpty()) {
+        pstmt.setString(1, "%" + name + "%");
+    } else if (!category.isEmpty()) {
+        pstmt.setString(1, category);
+    }
+
     ResultSet rs = pstmt.executeQuery();
 
     NumberFormat currFormat = NumberFormat.getCurrencyInstance();
@@ -51,10 +69,12 @@ try {
     }
     output += "</tbody></table>";
 
-    if (name == null || name.equals("")) {
+    if (name.isEmpty() && category.isEmpty()) {
         output = "<h2>All products</h2>" + output;
-    } else {
+    } else if (!name.isEmpty()) {
         output = "<h2>Products containing '" + name + "'</h2>" + output;
+    } else {
+        output = "<h2>All products in category: " + category + "</h2>" + output;
     }
     out.println(output);
 
