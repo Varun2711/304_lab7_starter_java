@@ -3,7 +3,10 @@
 #### Now we need to setup the inserts in the ddl file correctly, so when the website loads up, the correct products are listed
 #### was struggling a bit trying to make my own jsp page, but I think I got the hang of it, I will finish up the admin page tmrw and start working on the reviews, and maybe even get to the shopping cart.
 
-# source used today in setting up the add product: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
+#### sources used: 
+- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
+- https://www.devx.com/java-zone/17679/
+
 
 ##### Admin page
 - need to work on update/delete product
