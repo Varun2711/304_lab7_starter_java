@@ -65,6 +65,42 @@ try {
     }
     out.println("</table>");
 
+    out.println("<hr width=\"40%\" height=\"10px\" color=\"black\">");
+    out.println("<h2>Warehouse List</h2>");
+
+    sql = "SELECT * FROM warehouse";
+    sql2 = "SELECT p.productId, p.productName, pi.quantity FROM productInventory pi JOIN product p ON pi.productId = p.productId WHERE warehouseId = ?";
+
+    pstmt = con.prepareStatement(sql);
+    pstmt2 = con.prepareStatement(sql2);
+    
+    rs = pstmt.executeQuery();
+
+    String wTable = "<table><thead><td>Warehouse ID</td><td>Warehouse Name</td></thead>";
+
+    while (rs.next()) {
+        String warehouseId = rs.getString("warehouseId");
+        String wName = rs.getString("warehouseName");
+
+        wTable += "<tr><td>" + warehouseId + "</td><td>" + wName + "</td></tr>";
+
+        pstmt2.setString(1, warehouseId);
+        rs2 = pstmt2.executeQuery();
+        String inventoryTable = "<table><thead><td>Product Id</td><td>Product Name</td><td>Quantity</td></thead>";
+        while (rs2.next()) {
+            String pid = rs2.getString(1);
+            String pname = rs2.getString(2);
+            String qty = rs2.getString(3);
+            inventoryTable += "<tr><td>" + pid + "</td><td>" + pname + "</td><td>" + qty + "</td></tr>";
+        }
+        inventoryTable += "</table>";
+
+        wTable += "<tr><td colspan=\"2\">" + inventoryTable + "</td></tr>";
+    }
+    wTable += "</table>";
+    out.println(wTable);
+
+
 } catch(Exception e) {
     e.printStackTrace();
 } finally {
