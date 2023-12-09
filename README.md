@@ -7,6 +7,7 @@
 - https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
 - https://www.devx.com/java-zone/17679/
 - https://www.digitalocean.com/community/tutorials/how-to-change-a-css-background-images-opacity
+- https://stackoverflow.com/questions/7291873/disable-color-change-of-anchor-tag-when-visited
 
 #### image sources used:
 - 1.shop.jsp page's wallpaper  https://wall.alphacoders.com/by_sub_category.php?id=219006&name=Milky+Way+Wallpapers

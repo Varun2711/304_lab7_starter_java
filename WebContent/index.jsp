@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <title>Ray's Grocery Main Page</title>
+        <title>UBC Hardware Galaxy</title>
+		<style>
+			body { 
+            color: #ffffff; 
+        }
+
+        .bg {
+            position: absolute;
+            opacity: 0.6;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+		</style>
 </head>
 <body>
-<h1 align="center">Welcome to Ray's Grocery</h1>
+
+	<img class="bg" src="img/indexdd.jpg" alt="">
+<h1 align="center">UBC Hardware Galaxy</h1>
 
 <h2 align="center"><a href="login.jsp">Login</a></h2>
 

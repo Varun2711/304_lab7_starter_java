@@ -4,11 +4,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>EZ Grocery</title>
+    <title>UBC Hardware Galaxy</title>
+    <style>
+        body {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+        }
+        a#rtmp, a#rtmp:visited, a#rtmp:hover, a#rtmp:active {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-
-<h1>Search for the products you want to buy:</h1>
+    <h1><a id="rtmp" href="index.jsp">UBC Hardware Galaxy</a></h1>
+<h2>Search for the products you want to buy:</h2>
 
 <form method="get" action="listprod.jsp">
     <label for="productName">Enter a product name: </label>
