@@ -27,8 +27,13 @@
 
 <h2 align="center"><a href="listorder.jsp">List All Orders</a></h2>
 
-<h2 align="center"><a href="index.jsp">New Main Page</a></h2>
+<h2 align="center"><a id="mainPage" href="index.jsp">New Main Page</a></h2>
 
+<script>
+    window.onload(e => {
+        document.querySelector('#mainPage').click();
+    })
+</script>
 </body>
 </html>
 

@@ -73,7 +73,7 @@ try {
 %>
 <hr width="40%" height="10px" color="black">
     <h2>Add a product</h2>
-    <form method="post" id="productForm" action="addProduct.jsp">
+    <form method="post" enctype="multipart/form-data" action="addProduct.jsp">
         <input type="text" name="productName" placeholder="product name" size="50" required><br>
         <input type="number" name="productPrice" placeholder="0.00" step="0.01" min="0.00" size="20" required><br>
         <input type="text" name="productDesc" placeholder="product description" size="50" required><br>
@@ -81,6 +81,44 @@ try {
         <input type="file" name="productImage" accept="image/png, image/jpeg" required><br>
         <input type="submit" value="Add Product"><br>
     </form>
+
+<hr width="40%" height="10px" color="black">
+
+<h2>Ship Order</h2>
+
+<form method="post" action="ship.jsp">
+    <label for="orderId">Order to ship: </label>
+    <input type="text" name="orderId" size="20" required>
+    <input type="submit" value="Ship">
+</form>
+
+<hr width="40%" height="10px" color="black">
+
+<h2>Add Customer</h2>
+
+<form method="post" action="addCustomer.jsp">
+    <input type="text" name="fname" placeholder="John" size="50" required><br>
+    <input type="text" name="lname" placeholder="Smith" size="50" required><br>
+    <input type="email" name="email" placeholder="john123@email.com" size="30" required><br>
+    <input type="tel" name="phonenum" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"  placeholder="123-456-7890" size="30" required><br>
+    <input type="text" name="streetAddress" placeholder="123 abc street" size="50" required><br>
+    <input type="text" name="city" placeholder="city" size="30" required><br>
+    <input type="text" name="state" placeholder="state/province" size="40" required><br>
+    <input type="text" name="postalcode" pattern="[A-Z,a-z]{1}[0-9]{1}[A-Z,a-z]{1}[0-9]{1}[A-Z,a-z]{1}[0-9]{1}" placeholder="a1b2c3" required><br>
+    <input type="text" name="country" size="50" required><br>
+    <input type="text" name="userId" size="50" required><br>
+    <input type="text" name="password" size="50" required><br>
+</form>
+
+<hr width="40%" height="10px" color="black">
+
+<h2>Add warehouse</h2>
+
+<form method="post" action="addWarehouse.jsp">
+    <label for="whName">Warehouse Name: </label>
+    <input type="text" name="whName" size="50" required>
+    <input type="submit" value="Add warehouse">
+</form>
 
 </body>
 </html>

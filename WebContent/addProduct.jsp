@@ -16,6 +16,7 @@ String name = request.getParameter("productName");
 String category = request.getParameter("productCategory");
 double price = Double.parseDouble(request.getParameter("productPrice"));
 String desc = request.getParameter("productDesc");
+String imgUrl = request.getParameter("productImage");
 
 
 // get connection
