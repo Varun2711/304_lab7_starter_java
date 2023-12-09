@@ -6,6 +6,7 @@
 #### sources used: 
 - https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
 - https://www.devx.com/java-zone/17679/
+- https://www.digitalocean.com/community/tutorials/how-to-change-a-css-background-images-opacity
 
 
 ##### Admin page

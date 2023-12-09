@@ -2,38 +2,48 @@
 <html>
 <head>
 
-        <title>Ray's Grocery Main Page</title>
+        <title>UBC Hardware Galaxy</title>
 </head>
 <body>
-<h1 align="center">Welcome to Ray's Grocery</h1>
-=======
-    <title>EZ Grocery Main Page</title>
+    <title>UBC Hardware Galaxy</title>
     <style>
-        body {
-            background-size: 100%;
+        body { 
+            color: #ffffff; 
         }
 
-        h2 {
-            margin-top: 2em; /* Moves the header two lines down */
+        .bg {
+            position: absolute;
+            opacity: 0.6;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
+
+        a {
+            color: #ffffff; 
+            text-decoration: none; 
+
+        a:hover {
+            color: #ffcc00; 
+        }
+    }
     </style>
 </head>
 
-<body background="Groceries-ThinkstockPhotos-836782690.jpg">
+<body>
 
-<h1 align="center">Welcome to EZ Grocery</h1>
-
+    <img class="bg" src="img/siteBackground.jpg" alt="">
+    <div class="jumbotron">
+        <h1 align="center">Welcome to UBC Hardware Galaxy</h1>
+        <p align="center"><a class="btn btn-primary btn-large" href="more.html">learn more</a></p>
+    </div>
 <h2 align="center"><a href="listprod.jsp">Begin Shopping</a></h2>
 
 <h2 align="center"><a href="listorder.jsp">List All Orders</a></h2>
 
-<h2 align="center"><a id="mainPage" href="index.jsp">New Main Page</a></h2>
+<h2 align="center"><a href="index.jsp">New Main Page</a></h2>
 
-<script>
-    window.onload(e => {
-        document.querySelector('#mainPage').click();
-    })
-</script>
 </body>
 </html>
-
