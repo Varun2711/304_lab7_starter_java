@@ -30,6 +30,8 @@ if (session.getAttribute("loginMessage") != null)
 	<br/>
 	<input class="submit" type="submit" name="Submit2" value="Log In">
 </form>
+
+<a href="index.jsp">Go back to main page</a>
 </div>
 
 </body>

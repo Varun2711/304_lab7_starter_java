@@ -35,7 +35,6 @@
             String pname = rs.getString("productName");
             String desc = rs.getString("productDesc");
             String price = currFormat.format(rs.getDouble("productPrice"));
-
             out.println("<h2>" + pname + "</h2>");
 
             // Display image using productImageURL field if available
@@ -45,7 +44,7 @@
             }
 
             // Display image from the binary field productImage by providing an img tag and modifying the displayImage.jsp/php file.
-            out.println("<img src='displayImage.jsp?id=" + productId + "' alt='Product Image'><br>");
+            //out.println("<img src='displayImage.jsp?id=" + productId + "' alt='Product Image'><br>");
 
             // display price and description
             out.println("<p>Description: " + desc + "</p>");
@@ -55,6 +54,21 @@
             String href = "addcart.jsp?id=" + URLEncoder.encode(productId, "UTF-8") + "&name=" + URLEncoder.encode(pname, "UTF-8") + "&price=" + URLEncoder.encode(price.substring(1), "UTF-8");
             out.println("<a href=\"" + href + "\">add to cart</a><br>");
             out.println("<a href='listprod.jsp'>Continue Shopping</a>");
+
+            out.println("<h3>Reviews</h3>");
+            String sql2 = "SELECT customerId, reviewDate, reviewRating, reviewComment FROM review WHERE productId = ?";
+            pstmt.setString(1, productId);
+            pstmt = con.prepareStatement(sql2);
+
+            rs = pstmt.executeQuery();
+            out.println("<ul>");
+            while (rs.next()) {
+                out.println("<li>");
+                out.println("<p>Customer Id: " + rs.getString(1) + "<br>Review Date: "
+                     + rs.getString(2) + "<br>Rating: " + rs.getString(3) + "/5<br>Review: " + rs.getString(4) + "</p>");
+                out.println("</li>");
+            }
+            out.println("</ul>");
         } else {
             out.println("<p>Product not found!</p>");
         }
