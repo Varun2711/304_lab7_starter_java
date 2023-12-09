@@ -6,8 +6,9 @@
     </head>
 
     <body>
+        <%@ page import="java.sql.*" %>
         <%@ include file="jdbc.jsp" %>
-        <%@ page import="java.sql.* %>
+        
 
         <%
         String user = (String) session.getAttribute("authenticatedUser");
@@ -18,7 +19,8 @@
         try {
             getConnection();
             String sql = "SELECT customerId FROM customer WHERE userid = ?";
-            PreparedStatement pstmt = con.prepareStatement(sql)
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, user);
             ResultSet rs = pstmt.executeQuery();
 
@@ -38,7 +40,7 @@
             pstmt.executeUpdate();
 
             out.println("<h2>Your review was successfully added</h2>");
-            out.pritnln("<a href="index.jsp">Go back to main page</a>");
+            out.println("<a href=\"index.jsp\">Go back to main page</a>");
         } catch(Exception e) {
             e.printStackTrace();
         } finally {

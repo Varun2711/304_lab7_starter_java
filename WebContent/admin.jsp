@@ -109,12 +109,11 @@ try {
 %>
 <hr width="40%" height="10px" color="black">
     <h2>Add a product</h2>
-    <form method="post" enctype="multipart/form-data" action="addProduct.jsp">
+    <form method="post" action="addProduct.jsp">
         <input type="text" name="productName" placeholder="product name" size="50" required><br>
         <input type="number" name="productPrice" placeholder="0.00" step="0.01" min="0.00" size="20" required><br>
         <input type="text" name="productDesc" placeholder="product description" size="50" required><br>
         <input type="text" name="productCategory" placeholder="product category" size="50" required><br>
-        <input type="file" name="productImage" accept="image/png, image/jpeg" required><br>
         <input type="submit" value="Add Product"><br>
     </form>
 

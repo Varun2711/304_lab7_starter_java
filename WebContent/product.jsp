@@ -61,14 +61,15 @@
             pstmt = con.prepareStatement(sql2);
 
             rs = pstmt.executeQuery();
-            out.println("<ul>");
+            String reviewList = "<ul>";
             while (rs.next()) {
-                out.println("<li>");
-                out.println("<p>Customer Id: " + rs.getString(1) + "<br>Review Date: "
-                     + rs.getString(2) + "<br>Rating: " + rs.getString(3) + "/5<br>Review: " + rs.getString(4) + "</p>");
-                out.println("</li>");
+                reviewList += "<li>";
+                reviewList += "<p>Customer Id: " + rs.getString(1) + "<br>Review Date: "
+                     + rs.getString(2) + "<br>Rating: " + rs.getString(3) + "/5<br>Review: " + rs.getString(4) + "</p>";
+                reviewList +="</li>";
             }
-            out.println("</ul>");
+            reviewList += "</ul>";
+            out.println(reviewList);
         } else {
             out.println("<p>Product not found!</p>");
         }
