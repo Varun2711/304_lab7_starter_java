@@ -8,6 +8,12 @@
 - https://www.devx.com/java-zone/17679/
 - https://www.digitalocean.com/community/tutorials/how-to-change-a-css-background-images-opacity
 
+#### image sources used:
+- 1.shop.jsp page's wallpaper  https://wall.alphacoders.com/by_sub_category.php?id=219006&name=Milky+Way+Wallpapers
+
+- 2.learn more page's wallpaper https://www.bilibili.com/read/cv2796917/
+
+- 3.index.jsp wallpare https://www.pexels.com/zh-cn/photo/6985001/
 
 ##### Admin page
 - need to work on update/delete product

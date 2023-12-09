@@ -44,6 +44,7 @@ if (custId == null || !custId.matches("\\d+")) {
     // Check if the shopping cart is empty
     if (productList == null || productList.isEmpty()) {
         out.println("Your shopping cart is empty!");
+        out.println("<a href=\"listprod.jsp\">Go back to shopping!</a>");
     } else {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -126,6 +127,8 @@ if (custId == null || !custId.matches("\\d+")) {
             rs.next();
             out.println("<h2>Your order reference number is: " + orderId + "</h2>");
             out.println("<h2>Shipping to customer: " + rs.getString(1) + ", Name: " + rs.getString(2) + "</h2>");
+
+            out.println("<a href=\"index.jsp\">Go to main page</a>");
 
         } catch (Exception e) {
             out.println("An error occurred: " + e.getMessage());

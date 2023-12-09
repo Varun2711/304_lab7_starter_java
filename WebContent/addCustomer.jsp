@@ -46,6 +46,6 @@
             closeConnection();
         }
         %>
-        <a href="admin.jsp">Go back</a>
+        <a href="index.jsp">Go back</a>
     </body>
 </html>

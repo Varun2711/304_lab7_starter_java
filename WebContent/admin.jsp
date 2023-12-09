@@ -105,9 +105,10 @@ try {
     <input type="text" name="city" placeholder="city" size="30" required><br>
     <input type="text" name="state" placeholder="state/province" size="40" required><br>
     <input type="text" name="postalcode" pattern="[A-Z,a-z]{1}[0-9]{1}[A-Z,a-z]{1}[0-9]{1}[A-Z,a-z]{1}[0-9]{1}" placeholder="a1b2c3" required><br>
-    <input type="text" name="country" size="50" required><br>
-    <input type="text" name="userId" size="50" required><br>
-    <input type="text" name="password" size="50" required><br>
+    <input type="text" name="country" size="50" placeholder="country" required><br>
+    <input type="text" name="userId" size="50" placeholder="john123" required><br>
+    <input type="text" name="password" size="50" placeholder="password" required><br>
+    <input type="submit" value="add customer">
 </form>
 
 <hr width="40%" height="10px" color="black">
